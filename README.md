@@ -1,4 +1,4 @@
-### Solution
+# Solution
 
 According to the problem, cost optimization can be done by using Blob Storage service of Azure, which provides service to store huge amount of unstructured data at a feasible cost.
 
