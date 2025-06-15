@@ -1,0 +1,83 @@
+{
+  "rules": [
+    {
+      "name": "BillingHotToColdTransition",
+      "enabled": true,
+      "type": "Lifecycle",
+      "definition": {
+        "filters": {
+          "blobTypes": ["blockBlob"],
+          "prefixMatch": ["billing-hot/"]
+        },
+        "actions": {
+          "baseBlob": {
+            "tierToCool": {
+              "daysAfterModificationGreaterThan": 90
+            }
+          },
+          "snapshot": {
+            "tierToCool": {
+              "daysAfterCreationGreaterThan": 90
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "BillingColdLongTermRetention",
+      "enabled": true,
+      "type": "Lifecycle",
+      "definition": {
+        "filters": {
+          "blobTypes": ["blockBlob"],
+          "prefixMatch": ["billing-cold/"]
+        },
+        "actions": {
+          "baseBlob": {
+            "tierToArchive": {
+              "daysAfterModificationGreaterThan": 2555
+            }
+          },
+          "snapshot": {
+            "delete": {
+              "daysAfterCreationGreaterThan": 2555
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "BillingErrorCleanup",
+      "enabled": true,
+      "type": "Lifecycle",
+      "definition": {
+        "filters": {
+          "blobTypes": ["blockBlob"],
+          "prefixMatch": ["billing-hot/error/", "billing-cold/error/"]
+        },
+        "actions": {
+          "baseBlob": {
+            "delete": {
+              "daysAfterModificationGreaterThan": 30
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "BillingIncompleteMultipartUploadsCleanup",
+      "enabled": true,
+      "type": "Lifecycle",
+      "definition": {
+        "filters": {
+          "blobTypes": ["blockBlob"]
+        },
+        "actions": {
+          "baseBlob": {
+            "enableAutoTierToHotFromCool": true
+          }
+        }
+      }
+    }
+  ]
+}
