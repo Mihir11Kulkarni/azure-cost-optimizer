@@ -1,3 +1,5 @@
+### Solution
+
 According to the problem, cost optimization can be done by using Blob Storage service of Azure, which provides service to store huge amount of unstructured data at a feasible cost.
 
 In Blob Storage we can create lifecycle management policy for the data of different duration to cut the cost incurred by the organization.
